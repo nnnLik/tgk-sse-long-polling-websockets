@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example</title>
+    <style>
+        #examples {
+            text-align: center;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="examples">
+        <p id="sse"></p>
+    </div>
+    <script>
+        const progressText = document.getElementById("sse");
+
+        // SSE
+        const src = new EventSource("/sse-example");
+        src.onmessage = function (event) {
+            const data = event.data;
+            console.log(event);
+            progressText.innerText = data;
+        };
+
+        src.addEventListener("custom_1", function (event) {
+            const data = event.data;
+            progressText.innerText = data;
+        });
+        src.addEventListener("custom_2", function (event) {
+            const data = event.data;
+            progressText.innerText = data;
+        });
+    </script>
+</body>
+
+</html>
