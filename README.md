@@ -22,7 +22,8 @@
     4. Клиент тут же отправляет новый ожидающий запрос
 
 
-![long_polling](static/long-polling-example.jpeg)
+<img src="static/long-polling-example.jpeg" alt="long_polling" style="display: block; margin: 0 auto;">
+<p style="text-align:center; color:gray;">Example of long polling</p>
 
 **Long polling** имел ограничения при использовании HTTP/1 по количеству подключений к домену. Соответственно, использовать его было не практично.
 Проблема была решена с появлением HTTP/2, где появился мультиплексинг,
@@ -47,7 +48,9 @@
 
 Из особенностей можно рассказать, что в отличии от `WS`, `SSE` имеет одностороннюю связь - сервер может отправлять данные клиенту, но клиент не может по тому же соединению отправлять данные обратно. Так же могут возникнуть проблемы при желании отправить бинарные данные, `SSE` такого не поддерживает из коробки.
 
-![sse](static/sse-example.jpeg)
+<img src="static/sse-example.jpeg" alt="sse" style="display: block; margin: 0 auto;">
+<p style="text-align:center; color:gray;">Example of sse</p>
+
 
 `SSE` так же легко настроить как и со стороны сервера так и со стороны клиента. В клиентской части достаточно указать эндпоинт и... все.
 ```html
@@ -84,6 +87,7 @@ async def sse():
 Вот что мы получили
 
 ![sse_1](static/sse_1.gif)
+<p style="text-align:center; color:gray;">sse in devtools</p>
 
 В `DevTools` мы можем увидеть 4 колонки:
 
@@ -125,7 +129,7 @@ yield f"event: custom_2\nid: unique_1\ndata: +1\n\n"
 
 Некоторые прокси сервера могут убить соединение, если оно висит и по нему не идут какие-либо данные. Для того чтобы это пофиксить нужно реализовать `heartbeat`. Из под коробки `SSE` такого не поддерживает в отличии от `WS`.
 
-![rewriting](static/rewriting.png)
+<img src="static/rewriting.png" alt="rewriting" style="display: block; margin: 0 auto;">
 
 ## Websocket
 Теперь наконец-то о вебсокетах.
@@ -151,7 +155,8 @@ yield f"event: custom_2\nid: unique_1\ndata: +1\n\n"
 ##### Проблема №1. Состояние
 С REST все просто, они как бездушные роботы, не запоминают ничего о тебе, когда ты с ними общаешься. Но с WebSocket это не так. Они, как настоящие бро, помнят о тебе и твоих запросах. И вот если у нас несколько экземпляров, нужно как-то убедиться, что каждый из них обрабатывает своего пользователя.
 
-![scalling-problem-1](static/scalling-problem-1.png)
+<img src="static/scalling-problem-1.png" alt="scalling-problem-1" style="display: block; margin: 0 auto;">
+<p style="text-align:center; color:gray;">Бро помнит</p>
 
 Чтобы решить эту проблему можно использовать `липкую сессию`. Это особый вид балансировки нагрузки, при котором трафик поступает на один определенный сервер. Как правило, перед группой серверов находится балансировщик нагрузки, который и устанавливает правила распределения трафика между доступными серверами.
 
@@ -176,7 +181,7 @@ upstream some_ws_app {
 ###### Проблема №3. Авторизация
 WebSocket и SSE появились более десяти лет назад, однако до сих пор в стандартах отсутствуют рекомендации по решению задачи аутентификации для подобных соединений.
 
-<img src="static/rfc-6455-auth.png" alt="scaling" style="display: block; margin: 0 auto;">
+<img src="static/rfc-6455-auth.png" alt="rfc-6455-auth" style="display: block; margin: 0 auto;">
 
 <p style="text-align:center; color:gray;">Из RFC-6455</p>
 
