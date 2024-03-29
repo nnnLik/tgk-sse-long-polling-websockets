@@ -10,7 +10,9 @@ templates = Jinja2Templates(directory="templates")
 async def get_sse_datetime():
     while True:
         data = str(datetime.now())
-        yield f"event: custom_1\nid: unique_2\ndata: {data}\n\n"
+        # yield f"event: custom_1\nid: unique_2\ndata: {data}\n\n"
+        yield "event: 123\n"
+        yield "data: 123\n\n"
         await asyncio.sleep(0.1)
 
 
