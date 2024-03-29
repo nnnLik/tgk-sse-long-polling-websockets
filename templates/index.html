@@ -16,6 +16,7 @@
 <body>
     <div id="examples">
         <p id="sse"></p>
+        <p id="ws"></p>
     </div>
     <script>
         const progressText = document.getElementById("sse");
@@ -27,7 +28,6 @@
             console.log(event);
             progressText.innerText = data;
         };
-
         src.addEventListener("custom_1", function (event) {
             const data = event.data;
             progressText.innerText = data;
@@ -35,6 +35,21 @@
         src.addEventListener("custom_2", function (event) {
             const data = event.data;
             progressText.innerText = data;
+        });
+
+        // Websockets
+        const ws = new WebSocket('ws://localhost:6969/ws'); 
+        ws.addEventListener('open', (event) => { 
+            ws.send('wazzaaaap?'); 
+        });
+
+        document.addEventListener('click', () => {
+            const date = Date.now();
+            ws.send(date);
+        });
+
+        ws.addEventListener('close', (event) => { 
+            console.log('The connection has been closed'); 
         });
     </script>
 </body>
